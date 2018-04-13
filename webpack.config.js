@@ -1,5 +1,7 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const path = require('path');
 
 module.exports ={
 	entry: __dirname +'/app/index.js',//__dirname node.js全局变量 脚本所在目录
@@ -56,6 +58,23 @@ module.exports ={
 						loader:'postcss-loader'//import得css也要用postcss-loader处理？？？
 					}
 				]
+			},{
+				test: /\.(png|jpg|svg|gif)$/,
+				use: [{
+					loader: "file-loader",
+					options:{
+						outputPath: "images/",
+						name:"[name]-[hash:base64:5].[ext]"
+					}
+				},/*{
+					loader: "url-loader",
+					options:{
+						outputPath: "images/",
+						limit:2000
+					}
+				},*/{
+					loader: "image-webpack-loader",
+				}]
 			}
 		]
 	},
@@ -65,6 +84,9 @@ module.exports ={
 			template:__dirname + "/app/index.html",
 			title:"my html",
 			inject:'false'
+		}),
+		new CleanWebpackPlugin(path.resolve('./public'),{
+			verbose:false
 		})
 	]
 };

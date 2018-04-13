@@ -1,17 +1,13 @@
 import React from 'react';
-import imageArray from '../data/imageDatas'
+import ImageStage from './ImageStage.js';
+import ImageController from './ImageController.js';
 
-let imageStr = (function(imageStr){
-	for(let i=0;i<imageArray.length;i++){
-		imageArray[i].path = `../images/${imageArray[i].fileName}`;
-		imageStr.push(`<img src="${imageArray[i].path}"></img>`);
-	}
-	return imageStr;
-})(imageArray);
-
-class Gallery extends React.component{
+class Gallery extends React.Component{
 	render(){
-		return <div>{imageArray}</div>
+		return <div>
+					<ImageStage></ImageStage>
+					<ImageController></ImageController>
+				</div>
 	}
 }
 
