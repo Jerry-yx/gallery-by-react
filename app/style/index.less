@@ -11,6 +11,7 @@ html {
 body {
   margin: 0;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #eeecec;
 }
 
 h1, h2, h3, h4, h5, h6, p, ul {
@@ -45,4 +46,52 @@ h1, h2, h3, h4, h5, h6, p, ul {
 }
 ::placeholder {
   color: red;
+}
+.imageStage{
+  position:relative;
+  height:100vh;
+  overflow-x:hidden;
+  overflow-y:hidden;
+}
+.controller{
+    z-index: 200;
+    height: 40px;
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width:40%;
+    min-width:730px;
+
+}
+.controllerCircle{
+  width: 12px;
+  height: 12px;
+  background-color: white;
+  border: 1px solid #8d8888;
+  border-radius:50%;
+  float:left;
+  margin:10px;
+  list-style-type: none;
+
+}
+.common{
+  width: 12px;
+  height: 12px;
+  margin:10px;
+  background-color: transparent;
+  border-top: 1px solid #8d8888;
+  border-left: 1px solid #8d8888;
+  float:left;
+  z-index:200;
+  list-style-type: none;
+}
+.next{
+  &:extend(.common);
+    transform:rotate(135deg);
+}
+.prev{
+   &:extend(.common);
+    transform:rotate(-45deg);
 }

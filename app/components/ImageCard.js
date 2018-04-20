@@ -16,14 +16,18 @@ class ImageCard extends React.Component{
 		if(this.props.currentPic){
 			return <div className={style.card} style={this.props.style} onClick = {this.handleClick}>
 				<img src={cardMessage.path} title={cardMessage.fileName}></img>
-				<p>{cardMessage.title}</p>
-				<p>{cardMessage.desc}</p>
+				<div className={style.desc}>
+					<p>{cardMessage.title}</p>
+					<p>{cardMessage.desc}</p>
+				</div>
 			</div>	
 		}else{
 			return <div className={style.card} style={this.props.style}  onClick = {this.handleClick}>
-				<img src={cardMessage.path} title={cardMessage.fileName}></img>
-				<p>{cardMessage.title}</p>
-				<p>{cardMessage.desc}</p>
+				<img src={cardMessage.path} title={cardMessage.fileName}></img>				
+				<div className={style.desc}>
+					<p>{cardMessage.title}</p>
+					<p>{cardMessage.desc}</p>
+				</div>
 			</div>	
 		}
 	}

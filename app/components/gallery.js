@@ -9,56 +9,70 @@ const centerStyle={
 	bottom:0,
 	margin:'auto',
 	zIndex:100,
+	width:'22vw',
+	height:'24.2vw'
 }
 class Gallery extends React.Component{
 	constructor(props){
 		super(props);
-		this.state={currentPic:0,styleArr:{}};
+		this.state={currentPic:-1,styleArr:{},inverse:false};
 		this.turnCard = this.turnCard.bind(this, true);
 		this.changeCard = this.changeCard.bind(this, false);
 		this.styleSet = this.styleSet.bind(this, false);
 	}
+	componentWillMount(){
+		this.styleSet(0);
+	}
 	//选中图片切换图片
 	changeCard(e,id){
 		this.setState({currentPic:id});
-		this.styleSet(id);
+		this.styleSet(id);		
 	}
 	turnCard(e,order){
-		let currentPic 
+		let currentPic ;
+
 		if(order=="next"){
-			this.setState(function(preId){
-				currentPic = preId+1;
-				if(currentPic>this.props.num-1){
-					currentPic = 0;
-				}
-				return {currentPic:currentPic}
-			})
+			currentPic = this.state.currentPic+1;
+			if(currentPic>this.props.num-1){
+				currentPic = 0;
+			}
+			this.setState({currentPic:currentPic})
 		}else{
-			this.setState(function(preId){
-				currentPic = preId-1;
-				if(currentPic<0){
-					currentPic = this.props.num;
-				}
-				return {currentPic:currentPic}
-			})
+			currentPic = this.state.currentPic-1;
+			if(currentPic<0){
+				currentPic = this.props.num-1;
+			}
+			this.setState({currentPic:currentPic});
 		}
-		this.styleSet(currentPic);
+			this.styleSet(currentPic);
 	}
 	styleSet(e,i){
 		let styleArr={};
-		styleArr[i] = centerStyle;
-		for(let j=0;j<this.props.num;j++){
-			let style={};
-			if(i!=j){
-				if(j>this.props.num/2){
-					style.left =8*j+ Math.random()*150;  
-				}else{
-					style.left =8*j+ 850 + Math.random()*300; 
-				}	
-				style.top =8*j+ Math.random()*280; 
-				styleArr[j] =style;
+		if(i == this.state.currentPic){
+			styleArr = this.state.styleArr;
+			styleArr[i]={};
+			if(this.state.inverse){
+				styleArr[i]['opacity']='.3';
+			}
+			this.setState({inverse : !this.state.inverse});
+		}else{
+			styleArr[i] = centerStyle;
+			for(let j=0;j<this.props.num;j++){
+				let style={};
+				if(i!=j){
+					let transformRotate = 0;
+					if(j>=this.props.num/2){
+						style.left = `calc(${Math.random().toFixed(2)} * (30vw)`;  
+						style.transform = `rotate( ${(Math.random()>0.5?'-':'+')+(10 +Math.random()*25).toFixed(2)}deg)`;
+					}else{
+						style.right =`calc(${Math.random().toFixed(2)} * (30vw)`; 
+						style.transform = `rotate(${(Math.random()>0.5?'-':'+')+(10 +Math.random()*25).toFixed(2)}deg)`;
+					}	
+					style.top = `calc(${Math.random().toFixed(2)} * (100vh - 18vw * 1.2))`; 
+					styleArr[j] =style;
 
-			} 
+				} 
+			}
 		}
 		this.setState({styleArr:styleArr})
 	}
@@ -67,7 +81,7 @@ class Gallery extends React.Component{
 		//this.styleSet(0);
 		return <div>
 					<ImageStage pic={this.state.currentPic} style={this.state.styleArr} clickPic = {this.changeCard}></ImageStage>
-					<ImageController clickPic = {this.turnCard}></ImageController>
+					<ImageController num = {this.props.num}   clickOrder= {this.turnCard} clickPic = {this.changeCard}></ImageController>
 				</div>
 	}
 }

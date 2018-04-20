@@ -1,16 +1,30 @@
-@cardwidth:280px;
+@cardwidth:18vw;
 @cardimgWidth:100%;
+@rate:1.1;
 .card{
 	width: @cardwidth;
     border: 1px solid #C3C0C0;
     padding: 20px;
     position:absolute;
-    height:350px;
+    height:@rate * @cardwidth;
     background-color:white;
+    transition:all .7s ease-in-out;
+
     img{
     	width:100%;
+    	height:100%;
     }
     p{
     	line-height:20px;
+    }
+    .desc{
+    	position: absolute;
+    	display:none;
+    	top: 0;
+    	bottom: 0;
+    	left: 0;
+    	right: 0;
+    	margin: auto;
+    	padding: 30px;
     }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import imageArray from '../data/imageDatas';
 import ImageCard from './ImageCard.js';
+import styles from '../style/index.less'
 
 class ImageStage extends React.Component{
 	constructor(props){
@@ -16,7 +17,7 @@ class ImageStage extends React.Component{
 				imageStr.push(<ImageCard key = {i} style={this.props.style[i]} picId = {i}  cardMessage = {imageArray[i]} currentPic={false} clickPic = {this.props.clickPic}></ImageCard>);
 			}
 		}
-		return <div className={'imageStage'}>{imageStr}</div>
+		return <div className={styles.imageStage}>{imageStr}</div>
 	}
 }
 export default ImageStage;
