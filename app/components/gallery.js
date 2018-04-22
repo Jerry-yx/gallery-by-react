@@ -10,7 +10,10 @@ const centerStyle={
 	margin:'auto',
 	zIndex:100,
 	width:'22vw',
-	height:'24.2vw'
+	height:'24.2vw',
+	cardOpacity:0,
+	opacity:1,
+	padding:18
 }
 class Gallery extends React.Component{
 	constructor(props){
@@ -25,7 +28,6 @@ class Gallery extends React.Component{
 	}
 	//选中图片切换图片
 	changeCard(e,id){
-		this.setState({currentPic:id});
 		this.styleSet(id);		
 	}
 	turnCard(e,order){
@@ -48,11 +50,23 @@ class Gallery extends React.Component{
 	}
 	styleSet(e,i){
 		let styleArr={};
+
 		if(i == this.state.currentPic){
 			styleArr = this.state.styleArr;
+			let styleStr = {};
+			styleStr = styleArr[i];
 			styleArr[i]={};
-			if(this.state.inverse){
-				styleArr[i]['opacity']='.3';
+			for(let m in styleStr){
+				styleArr[i][m]=styleStr[m];
+			};
+			if(!this.state.inverse){
+				styleArr[i]['opacity']='.8';
+				styleArr[i]['transform']='rotateY(180deg)';
+				styleArr[i]['cardOpacity']=.7;
+			}else{
+				styleArr[i]['opacity']='1';
+				styleArr[i]['transform']='rotateY(0deg)';
+				styleArr[i]['cardOpacity']=0;
 			}
 			this.setState({inverse : !this.state.inverse});
 		}else{
@@ -68,13 +82,16 @@ class Gallery extends React.Component{
 						style.right =`calc(${Math.random().toFixed(2)} * (30vw)`; 
 						style.transform = `rotate(${(Math.random()>0.5?'-':'+')+(10 +Math.random()*25).toFixed(2)}deg)`;
 					}	
+					style['opacity']='1';
+					style['cardOpacity']='0';
 					style.top = `calc(${Math.random().toFixed(2)} * (100vh - 18vw * 1.2))`; 
 					styleArr[j] =style;
 
 				} 
 			}
+			this.setState({currentPic:i,inverse : false})
 		}
-		this.setState({styleArr:styleArr})
+		this.setState({styleArr:styleArr});
 	}
 
 	render(){
